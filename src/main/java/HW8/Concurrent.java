@@ -16,7 +16,7 @@ public class Concurrent {
 
             }
             int number;
-            boolean[] boolResult=new boolean[rff.length];
+            boolean[] boolResult;
             for (LifeT lifeT : list) {
                 lifeT.join();
                 boolResult=lifeT.getResult();

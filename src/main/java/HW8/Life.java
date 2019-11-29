@@ -1,6 +1,7 @@
 package HW8;
 
 import java.io.*;
+import java.util.Arrays;
 
 
 public class Life {
@@ -43,7 +44,7 @@ public class Life {
                 }
                 System.out.println();
             }
-            return result;
+            return replacement(result);
         }
 
 
@@ -66,20 +67,21 @@ public class Life {
 
             public static boolean [][] newField(boolean[][]oldField, int sumIterat){
                 int size = oldField.length;
-                boolean[][]result=oldField.clone();
+                boolean[][]result=new boolean[oldField.length][oldField.length];
+
                 for (int m = 0; m < sumIterat; m++) {
 
                     for (int i = 0; i < size; i++) {
                         for (int j = 0; j < size; j++) {
                             if(sumOfNeighbors(oldField,i,j)==3){
                                 result[i][j]=true;
-                            }
-                            if(sumOfNeighbors(oldField,i,j)<2||sumOfNeighbors(oldField,i,j)>3){
+                            }else if(sumOfNeighbors(oldField,i,j)<2||sumOfNeighbors(oldField,i,j)>3){
                                 result[i][j]=false;
+                            }else {
+                                result[i][j]=oldField[i][j];
                             }
                         }
                     }
-                    oldField=result.clone();
                 }
                 return result;
             }
@@ -102,6 +104,25 @@ public class Life {
         }
         return result;
     }
+
+    public static boolean [][] replacement(boolean [][] oldField){
+        int size=oldField.length;
+        for (int i = 1; i < size-1; i++) {
+            oldField[i][0]=oldField[i][size-2];
+            oldField[i][size-1]=oldField[i][1];
+            oldField[0][i]=oldField[size-2][i];
+            oldField[size-1][i]=oldField[1][i];
+        }
+        oldField[0][0] = oldField[size-2][size-2];
+        oldField[size-1][size-1] = oldField[1][1];
+        oldField[0][size-1] = oldField[size-2][1];
+        oldField[size-1][0] = oldField[1][size-2];
+
+        return oldField;
+
+    }
+
+
 }
 
 
